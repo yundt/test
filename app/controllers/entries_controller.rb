@@ -40,16 +40,20 @@ class EntriesController < ApplicationController
   # POST /entries
   # POST /entries.json
   def create
-    @entry = Entry.new(params[:entry])
-    current_user.entries << @entry
+    if current_user == nil
+      redirect_to new_user_session_path
+    else
+      @entry = Entry.new(params[:entry])
+      current_user.entries << @entry
 
-    respond_to do |format|
-      if @entry.save
-        format.html { redirect_to @entry, notice: 'Entry was successfully created.' }
-        format.json { render json: @entry, status: :created, location: @entry }
-      else
-        format.html { render action: "new" }
-        format.json { render json: @entry.errors, status: :unprocessable_entity }
+      respond_to do |format|
+        if @entry.save
+          format.html { redirect_to @entry, notice: 'Entry was successfully created.' }
+          format.json { render json: @entry, status: :created, location: @entry }
+        else
+          format.html { render action: "new" }
+          format.json { render json: @entry.errors, status: :unprocessable_entity }
+        end
       end
     end
   end
