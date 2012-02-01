@@ -5,11 +5,9 @@
   <%= @entry.text %>
 </p>
 
-<p>
-  <b>User:</b>
-  <%= @entry.user_id %>
-</p>
-
+<%= image_tag @entry.photo.url %>
+<%= image_tag @entry.photo.url(:medium) %>
+<%= image_tag @entry.photo.url(:thumb) %>
 
 <%= link_to 'Edit', edit_entry_path(@entry) %> |
 <%= link_to 'Back', entries_path %>
